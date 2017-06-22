@@ -1,0 +1,21 @@
+{
+  "name": "@fakundo/webpack-po-messages-loader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "author": "",
+  "license": "ISC",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fakundo/webpack-po-messages-loader"
+  },
+  "dependencies": {
+    "po2json": "^0.4.5",
+    "fnv": "^0.1.3",
+    "loader-utils": "^1.1.0"
+  }
+}
