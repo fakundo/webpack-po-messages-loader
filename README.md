@@ -1,4 +1,4 @@
-# Webpack Messages Loader
+## Webpack Messages Loader
 
 1. Loads messages from .po files
 2. Gives a special token to each file 
