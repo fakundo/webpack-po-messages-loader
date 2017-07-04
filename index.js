@@ -25,25 +25,29 @@ module.exports.pitch = function (remainingRequest) {
   var callback = this.async();
   var basename = path.basename(remainingRequest, '.po');
   var options = loaderUtils.getOptions(this);
+  var token = createToken(remainingRequest);
+  var source = 'module.exports = ' + JSON.stringify(token) + ';';
 
-  po2json.parseFile(remainingRequest, { format: 'jed1.x' }, function (err, data) {
-    if (err) {
-      this.emitError(err);
-    } else {
-      if (!collection[basename]) collection[basename] = {};
-      var token = createToken(remainingRequest);
-      var messages = data.locale_data.messages;
-      // Delete metadata
-      delete messages[''];
-      collection[basename][token] = messages;
+  if (options.outputDir) {
+    po2json.parseFile(remainingRequest, { format: 'jed1.x' }, function (err, data) {
+      if (err) {
+        this.emitError(err);
+      } else {
+        var messages = data.locale_data.messages;
+        delete messages[''];
+        if (!collection[basename]) collection[basename] = {};
+        collection[basename][token] = messages;
 
-      fs.outputFile(
-        path.resolve(options.outputDir, basename + '.json'),
-        JSON.stringify(collection[basename]),
-        function (error) {
-          callback(error, 'module.exports = ' + JSON.stringify(token) + ';');
-        }
-      );
-    }
-  });
+        fs.outputFile(
+          path.resolve(options.outputDir, basename + '.json'),
+          JSON.stringify(collection[basename]),
+          function (error) {
+            callback(error, source);
+          }
+        );
+      }
+    });
+  } else {
+    callback(error, source);
+  }
 };
