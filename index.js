@@ -1,6 +1,6 @@
 var loaderUtils = require('loader-utils');
 var po2json = require('po2json');
-var fs = require('fs');
+var fs = require('fs-extra');
 var path = require('path');
 var fnv = require('fnv');
 
@@ -37,11 +37,11 @@ module.exports.pitch = function (remainingRequest) {
       delete messages[''];
       collection[basename][token] = messages;
 
-      fs.writeFile(
+      fs.outputFile(
         path.resolve(options.outputDir, basename + '.json'),
         JSON.stringify(collection[basename]),
-        function () {
-          callback(null, 'module.exports = ' + JSON.stringify(token) + ';');
+        function (error) {
+          callback(error, 'module.exports = ' + JSON.stringify(token) + ';');
         }
       );
     }
