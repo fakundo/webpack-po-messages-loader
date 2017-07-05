@@ -48,6 +48,6 @@ module.exports.pitch = function (remainingRequest) {
       }
     });
   } else {
-    callback(error, source);
+    callback(null, source);
   }
 };
