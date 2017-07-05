@@ -28,7 +28,7 @@ module.exports.pitch = function (remainingRequest) {
   var token = createToken(remainingRequest);
   var source = 'module.exports = ' + JSON.stringify(token) + ';';
 
-  if (options.outputDir) {
+  if (options && options.outputDir) {
     po2json.parseFile(remainingRequest, { format: 'jed1.x' }, function (err, data) {
       if (err) {
         this.emitError(err);
